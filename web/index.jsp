@@ -46,9 +46,7 @@
     </td>
     <td>     
         <br>
-          <form name="cancel" action="index.jsp" method="get">
-            <input type="submit" name="cancelar" value="Cancelar" >
-        </form>   
+
  </td>
         </tr>
     </tbody>
