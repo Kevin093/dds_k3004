@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <title>Busqueda de POIs</title>
+    <link rel="stylesheet" href="css/styles.css"
+  </head>
+  <script>
+  function check() {
+   var buscar = document.getElementById("nombre1").value;
+   if(buscar == "CGP1"){
+   document.write(buscar);
+		window.alert(buscar);
+		window.open("../CGP/CGP1.html");}
+	else{
+		window.alert("<ola");}
+   }
+
+  </script>
+<body>
+  <h2>POIS</h2>
+  <div>
+      <form id="login" name="login" action="..\terminal\portal.html" >
+      <input type="submit" name="continue" value="Volver">
+	  </form>
+  <div>
+    <table>
+      <tr>
+        <th>Nombre</th>
+		<th>Direcci&oacute;n</th>
+      </tr>
+      <tr>
+        <td>CGP 4</td>
+        <td>Av. del Barco Centenera 2906</td>		
+      </tr>
+      <tr>
+        <th>CGP 3</th>
+        <th>Junín 521</th>
+      </tr>
+      <tr>
+         <th>Parada 99</th>
+        <th>Av. Córdoba y Av. Medrano</th>
+      </tr>
+    </table>
+  </body>
+</html>
