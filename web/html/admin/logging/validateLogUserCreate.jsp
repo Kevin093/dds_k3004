@@ -1,3 +1,4 @@
+    <!-- Realiza el query de búsqueda en los logs de creación por usuario  -->
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 
@@ -49,7 +50,7 @@ String currentTime = sdf.format(dt);
     </table>
 
 <sql:query var="logUser" dataSource="jdbc/poisDBMySQL">
-select Fecha, Usuario, NombrePoi, tipopoi.TipoPOI from (logscreacionpoi,tipopoi) where logscreacionpoi.TipoPOI = tipopoi.idtipopoi AND usuario = '<%=nombre %>'; 
+select Fecha, Usuario, NombrePoi, tipopoi.TipoPOI from (logscreacionpoi,tipopoi) where logscreacionpoi.TipoPOI = tipopoi.idtipopoi AND usuario = '<%=nombre %>' order by Fecha desc ; 
 </sql:query>
     
 <table border="0">

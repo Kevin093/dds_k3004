@@ -12,31 +12,28 @@ String currentTime = sdf.format(dt);
     
     try{
         String user = request.getParameter("user");
-        String nombre = request.getParameter("nombre");   
-        String comuna = request.getParameter("comuna");
-        String posicion = request.getParameter("posicion");
-        String direccion = request.getParameter("direccion");
+        String usuario = request.getParameter("usuario");   
+        String contraseña = request.getParameter("contraseña");
+        String tipo = request.getParameter("tipo");
         Class.forName("com.mysql.jdbc.Driver");  // MySQL database connection
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pois?" + "user=root&password=1234");    
-        PreparedStatement pst = conn.prepareStatement("insert into poicgp (direccion, nombre, coordenada, comuna, tipoPOI) value (?, ?, ?, ?, '4')");
-        pst.setString(1, direccion);
-        pst.setString(2, nombre);
-        pst.setString(3, posicion);
-        pst.setString(4, comuna);
-        PreparedStatement pst2 = conn.prepareStatement("insert into logscreacionpoi (fecha, usuario, nombrepoi, tipoPOI) value (?, ?, ?,'4')");
+        PreparedStatement pst = conn.prepareStatement("insert into users (userName, userPass, userType) value (?, ?, ?)");
+        pst.setString(1, usuario);
+        pst.setString(2, contraseña);
+        pst.setString(3, tipo);
+        PreparedStatement pst2 = conn.prepareStatement("insert into logsadminuser (Fecha, Usuario, NombreUsuario, TipoUsuario, TipoModificacion) value (?, ?, ?, ?,'1')");
         pst2.setString(1, currentTime);
         pst2.setString(2, user);
-        pst2.setString(3, nombre);
-       
+        pst2.setString(3, usuario);
+        pst2.setString(4, tipo);       
         int rs = pst.executeUpdate();
-
-        if(rs == 1){           
+       
+        if(rs == 1){
         pst2.executeUpdate();  %> 
     <script>
         var usuario = "<%= user%>"
-        var nombre = "<%= nombre%>"
-        if(window.confirm("El POI CGP "+nombre+" se creó correctamente")){
-            window.location.replace("poiCGP.jsp?user="+usuario);            
+        if(window.confirm("El usuario se creó correctamente")){
+            window.location.replace("../portal-admin.jsp?user="+usuario);            
         }
     </script>
         <%         
@@ -44,8 +41,8 @@ String currentTime = sdf.format(dt);
         else{            %>
     <script>
         var usuario = "<%= user%>"
-        if(window.confirm("El POI CGP no se creó correctamente")){
-            window.location.replace("poiCGP.jsp?user="+usuario);            
+        if(window.confirm("El usuario no se creó correctamente")){
+            window.location.replace("../portal-admin.jsp?user="+usuario);            
         }
     </script>
 <% }}
@@ -56,5 +53,3 @@ String currentTime = sdf.format(dt);
   
    }      
 %>
-
-

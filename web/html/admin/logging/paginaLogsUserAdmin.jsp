@@ -20,13 +20,13 @@
     {
         if(username != "" && dateFrom == "" && dateTo == "")
     {
-        window.location.replace("validateLogUserCreate.jsp?nombre="+username+"&user="+name);
+        window.location.replace("validateLogUserAdmin.jsp?nombre="+username+"&user="+name);
 
     }
    else
     {
     if(username == "" && dateFrom != "" && dateTo != ""){    
-    window.location.replace("validateLogDateCreate.jsp?fechaDesde="+dateFrom+"&fechaHasta="+dateTo+"&user="+name);
+    window.location.replace("validateLogDateAdmin.jsp?fechaDesde="+dateFrom+"&fechaHasta="+dateTo+"&user="+name);
     }
             }
     }}
@@ -39,7 +39,7 @@
    
    
     <body>
-        <h1>Logs de creaciones</h1>
+        <h1>Logs de administracion de usuarios</h1>
    
     <table border="0">
         <thead>

@@ -1,4 +1,5 @@
-    <!-- Realiza el query de búsqueda en los logs de búsqueda por usuario  -->
+    <!-- Realiza el query de búsqueda en los logs de administración de usuario por fecha  -->
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 
@@ -12,8 +13,32 @@ java.text.SimpleDateFormat sdf =
 
 String currentTime = sdf.format(dt);
 %>
+
 <% String usern = request.getParameter("user");%>
-<% String nombre = request.getParameter("nombre");%>
+
+<%
+String fechaDesdeDMY = request.getParameter("fechaDesde");
+String fechaHastaDMY = request.getParameter("fechaHasta");
+
+java.text.SimpleDateFormat dmy = new java.text.SimpleDateFormat("dd-MM-yyyy"); 
+java.text.SimpleDateFormat ymd = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+
+Date date = null;
+try {
+    date = (Date) dmy.parse(fechaDesdeDMY);
+} catch (ParseException e) {
+    e.printStackTrace();
+}
+Date date2 = null;
+try {
+    date2 = (Date) dmy.parse(fechaHastaDMY);
+} catch (ParseException e) {
+    e.printStackTrace();
+} 
+
+String fechaDesde= ymd.format(date);
+String fechaHasta= ymd.format(date2);%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -26,13 +51,12 @@ String currentTime = sdf.format(dt);
    <img src="../../../others/poiImage.jpg" width="644" height="287" alt="poiImage"/>
 
     <body>
-        <h1>Logs de busquedas</h1>
-   
+        <h1>Logs de administracion de usuarios</h1>
     <table border="0">
         <thead>
             <tr>
                 <th>Usuario</th>
-                <th>Fecha</th>
+                <th>Fecha (dd-mm-aaaa)</th>
                 <th></th>
               
             </tr>
@@ -42,26 +66,26 @@ String currentTime = sdf.format(dt);
                 <td><input type="text" id="usuario" name="usuario" placeholder="Usuario" max="25"></td>
                 <td><input type="text" id="fechaDesde" name="fechaDesde"placeholder="Desde" max="25"></td>
                 <td><input type="text" id="fechaHasta" name="fechaHasta" placeholder="Hasta" max="25"></td>
-                <td><input type="button" id="find" value="Buscar" name="find" onclick="window.location='paginaLogs.jsp?user=<%= usern%>'" /></td>
+                <td><input type="button" id="find" value="Buscar" name="find" onclick="window.location='paginaLogsUserAdmin.jsp?user=<%= usern%>'" /></td>
                 <td><input type="button" name="back" value="Volver" onclick="window.location='../portal.jsp?user=<%= usern%>'"></td>
                 <td><input type="button" name="logs" value="Salir" onclick="window.location='../../../index.jsp'"></td>
             </tr>
         </tbody>
     </table>
 
-<sql:query var="logUser" dataSource="jdbc/poisDBMySQL">
-    select Fecha, Usuario , Campo1, Campo2, tipopoi.TipoPOI, CantidadPOIs from (logs,tipopoi) where logs.TipoPOI = tipopoi.idtipopoi AND usuario = '<%=nombre %>' order by Fecha desc; 
+<sql:query var="logDate" dataSource="jdbc/poisDBMySQL">
+select Fecha, Usuario, NombreUsuario, tipouser.tipoUser, tipoAdministracion from logsadminuser, tipouser, tipoadminuser where TipoUsuario = tipouser.idtipouser and idtipoadminuser = TipoModificacion AND DATE(Fecha) BETWEEN '<%=fechaDesde %>' AND '<%=fechaHasta %>' order by Fecha desc ; 
 </sql:query>
     
 <table border="0">
     <!-- column headers -->
     <tr>
-    <c:forEach var="columnName" items="${logUser.columnNames}">
+    <c:forEach var="columnName" items="${logDate.columnNames}">
         <th><c:out value="${columnName}"/></th>
     </c:forEach>
 </tr>
 <!-- column data -->
-<c:forEach var="row" items="${logUser.rowsByIndex}">
+<c:forEach var="row" items="${logDate.rowsByIndex}">
     <tr>
     <c:forEach var="column" items="${row}">
         <td><c:out value="${column}"/></td>
@@ -70,7 +94,7 @@ String currentTime = sdf.format(dt);
 </c:forEach>
 </table>
 
-    
-   </body>
-
-</html>
+  
+    </body>
+</html>  
+  

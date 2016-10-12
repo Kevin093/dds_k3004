@@ -22,19 +22,19 @@
         }
         else{
         if(paradaCheck == true && localCheck == false && bancoCheck == false && cgpCheck == false){
-            window.location.replace("\portal_1.jsp?user="+name+"&id="+nombreB1+"&id2="+nombreB2+"&type="+'1');}
+            window.location.replace("buscarPoi.jsp?user="+name+"&id="+nombreB1+"&id2="+nombreB2+"&type="+'1');}
         else
         {
         if(localCheck == true && paradaCheck == false && bancoCheck == false && cgpCheck == false){
-            window.location.replace("\portal_1.jsp?user="+name+"&id="+nombreB1+"&id2="+nombreB2+"&type="+'2');}
+            window.location.replace("buscarPoi.jsp?user="+name+"&id="+nombreB1+"&id2="+nombreB2+"&type="+'2');}
         else
         {
         if(bancoCheck == true && paradaCheck == false && localCheck == false && cgpCheck == false){
-            window.location.replace("\portal_1.jsp?user="+name+"&id="+nombreB1+"&id2="+nombreB2+"&type="+'3');}
+            window.location.replace("buscarPoi.jsp?user="+name+"&id="+nombreB1+"&id2="+nombreB2+"&type="+'3');}
         else
         {
         if(cgpCheck == true && paradaCheck == false && localCheck == false && bancoCheck == false){
-            window.location.replace("\portal_1.jsp?user="+name+"&id="+nombreB1+"&id2="+nombreB2+"&type="+'4');}
+            window.location.replace("buscarPoi.jsp?user="+name+"&id="+nombreB1+"&id2="+nombreB2+"&type="+'4');}
         else
         {
         if (paradaCheck == false && localCheck == false && bancoCheck == false && cgpCheck == false)
@@ -54,16 +54,20 @@
 
 <body>
     <h1>Busqueda de POIs</h1>
-    <div>
-         Criterio de b&uacute;squeda
-         
-        <div>
-            <br>
-      Valores de b&uacute;squeda
+         <table border="0">
+    <thead>
+        <tr><th>
+ Valores de b&uacute;squeda         
+        <div></th>
+            </tr>
+    </thead>
+         </table>
+        
+     
       <br>      <br>
-
+ <div>
       <input type="text" id="nombre1" name="nombre1" placeholder="Nombre" max="25">
-    </div>
+    
     <div>
       <br>
       <input type="text" id="nombre2" placeholder="Nombre" max="25">
@@ -71,7 +75,10 @@
     <table border="0">
     <thead>
         <tr>
-            <th></th>
+            <th>   <div>Criterio de b&uacute;squeda
+         </div>
+       
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -120,7 +127,7 @@
     <div>
        
         <form id="add" name="addPoi"> 
-        <input type="button" name="user" value="Agregar" onclick="window.location='../admin/crearPoi.jsp?user=<%= usern%>'">
+        <input type="button" name="user" value="Agregar POI" onclick="window.location='../admin/crearPoi.jsp?user=<%= usern%>'">
         </form>
     </div>
             </td>
@@ -133,18 +140,32 @@
             </td>
             <td> 
     <div>
-        <form id="logs" name="logsPOI"> 
-        <input type="button" name="logs" value="Logs Busqueda" onclick="window.location='../admin/logging/paginaLogs.jsp?user=<%= usern%>'">
+        <form id="logsCreatePoi" name="logsPOICreate"> 
+        <input type="button" name="logs" value="Logs Creacion POI" onclick="window.location='../admin/logging/paginaLogsCreate.jsp?user=<%= usern%>'">
+        </form>   
+    </div>
+            </td>             
+            <td> 
+    <div>
+        <form id="logs" name="logsPOIsearch"> 
+        <input type="button" name="logs" value="Logs Busqueda POI" onclick="window.location='../admin/logging/paginaLogs.jsp?user=<%= usern%>'">
         </form>   
     </div>
             </td>     
             <td> 
     <div>
-        <form id="logsCreate" name="logsPOICreate"> 
-        <input type="button" name="logs" value="Logs Creacion" onclick="window.location='../admin/logging/paginaLogsCreate.jsp?user=<%= usern%>'">
+        <form id="portalAdmin" name="portalAdmin"> 
+        <input type="button" name="portalAdmin" value="Portal Administración Usuarios" onclick="window.location='portal-admin.jsp?user=<%= usern%>'">
+        </form> 
+    </div>
+            </td> 
+            <td> 
+    <div>
+        <form id="logsUserAdmin" name="logsUserAdmin"> 
+        <input type="button" name="logs" value="Logs Administración User" onclick="window.location='../admin/logging/paginaLogsUserAdmin.jsp?user=<%= usern%>'">
         </form>   
     </div>
-            </td>            
+            </td>             
             <td> 
     <div>
         <form id="logout" name="logout"> 

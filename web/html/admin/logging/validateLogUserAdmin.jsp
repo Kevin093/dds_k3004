@@ -1,4 +1,4 @@
-    <!-- Realiza el query de búsqueda en los logs de búsqueda por usuario  -->
+    <!-- Realiza el query de búsqueda en los logs de administración de usuario por usuario  -->
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 
@@ -26,7 +26,7 @@ String currentTime = sdf.format(dt);
    <img src="../../../others/poiImage.jpg" width="644" height="287" alt="poiImage"/>
 
     <body>
-        <h1>Logs de busquedas</h1>
+        <h1>Logs de administracion de usuarios</h1>
    
     <table border="0">
         <thead>
@@ -42,7 +42,7 @@ String currentTime = sdf.format(dt);
                 <td><input type="text" id="usuario" name="usuario" placeholder="Usuario" max="25"></td>
                 <td><input type="text" id="fechaDesde" name="fechaDesde"placeholder="Desde" max="25"></td>
                 <td><input type="text" id="fechaHasta" name="fechaHasta" placeholder="Hasta" max="25"></td>
-                <td><input type="button" id="find" value="Buscar" name="find" onclick="window.location='paginaLogs.jsp?user=<%= usern%>'" /></td>
+                <td><input type="button" id="find" value="Buscar" name="find" onclick="window.location='paginaLogsUserAdmin.jsp?user=<%= usern%>'" /></td>
                 <td><input type="button" name="back" value="Volver" onclick="window.location='../portal.jsp?user=<%= usern%>'"></td>
                 <td><input type="button" name="logs" value="Salir" onclick="window.location='../../../index.jsp'"></td>
             </tr>
@@ -50,7 +50,9 @@ String currentTime = sdf.format(dt);
     </table>
 
 <sql:query var="logUser" dataSource="jdbc/poisDBMySQL">
-    select Fecha, Usuario , Campo1, Campo2, tipopoi.TipoPOI, CantidadPOIs from (logs,tipopoi) where logs.TipoPOI = tipopoi.idtipopoi AND usuario = '<%=nombre %>' order by Fecha desc; 
+    select Fecha, Usuario, NombreUsuario, tipouser.tipoUser, tipoAdministracion from logsadminuser, tipouser, tipoadminuser where TipoUsuario = tipouser.idtipouser and idtipoadminuser = TipoModificacion and Usuario = '<%=nombre %>' order by Fecha desc
+
+
 </sql:query>
     
 <table border="0">

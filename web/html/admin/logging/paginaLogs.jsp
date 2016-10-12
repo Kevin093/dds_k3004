@@ -45,7 +45,7 @@
         <thead>
             <tr>
                 <th>Usuario</th>
-                <th>Fecha</th>
+                <th>Fecha (dd-mm-aaaa)</th>
                 <th></th>
                 
             </tr>

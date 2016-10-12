@@ -5,6 +5,13 @@
    	<link href="style.css" rel="stylesheet" type="text/css"/>
         <title>Sistema de POIs</title
     </head>
+    <% String errorM = request.getParameter("estado");
+    if (errorM.equals("Error")) {%>
+
+    <script>
+        window.alert("Error de Login, usuario o contraseña incorrectos");
+    </script>
+    <% }%>
     <script>
       function checkUser(){ 
           var adminCheck = document.getElementById("checkAdmin").checked;

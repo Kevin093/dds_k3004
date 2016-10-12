@@ -17,10 +17,6 @@ String currentTime = sdf.format(dt);
         String posicion = request.getParameter("posicion");
         String direccion = request.getParameter("direccion");
         String servicios = request.getParameter("servicios");        
-        out.println(nombre);
-        out.println(sucursal);
-        out.println(posicion);
-        out.println(direccion);
         Class.forName("com.mysql.jdbc.Driver");  // MySQL database connection
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pois?" + "user=root&password=1234");    
         PreparedStatement pst = conn.prepareStatement("insert into poibanco (direccion, nombre, sucursal, coordenada, servicios, tipoPOI) value (?, ?, ?, ?, ?, '3')");
@@ -35,22 +31,30 @@ String currentTime = sdf.format(dt);
         pst2.setString(3, nombre);
        
         int rs = pst.executeUpdate();
-        int rs2 = pst2.executeUpdate();
-        if(rs == 1 && rs2 == 1){           
-        out.println("OK");
-        response.sendRedirect("poiBanco.jsp?user="+user); 
 
-        }        
-        else{
-            out.println("BAD");
-        response.sendRedirect("../../index.jsp");
+        if(rs == 1){           
+        pst2.executeUpdate();  %> 
+    <script>
+        var usuario = "<%= user%>"
+        var nombre = "<%= nombre%>"
+        if(window.confirm("El POI Banco "+nombre+" se creó correctamente")){
+            window.location.replace("poiBanco.jsp?user="+usuario);            
         }
+    </script>
+        <%         
+        }        
+        else{            %>
+    <script>
+        var usuario = "<%= user%>"
+        if(window.confirm("El POI Banco no se creó correctamente")){
+            window.location.replace("poiBanco.jsp?user="+usuario);            
+        }
+    </script>
+<% }}
        
-   }
-   catch(Exception e){       
+     catch(Exception e){       
        out.println("Something went wrong !! Please try again");   
          out.println("\n Message: " + e.getMessage());
   
    }      
 %>
-

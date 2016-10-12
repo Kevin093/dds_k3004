@@ -17,10 +17,6 @@ String currentTime = sdf.format(dt);
         String posicion = request.getParameter("posicion");
         String direccion = request.getParameter("direccion");
         String rubro = request.getParameter("rubro");        
-        out.println(nombre);
-        out.println(rubro);
-        out.println(posicion);
-        out.println(direccion);
         Class.forName("com.mysql.jdbc.Driver");  // MySQL database connection
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pois?" + "user=root&password=1234");    
         PreparedStatement pst = conn.prepareStatement("insert into poilocal (Direccion, Nombre, Coordenada, Rubro, Horarios, tipoPOI) value (?, ?, ?, ?, ?,'2')");
@@ -35,19 +31,28 @@ String currentTime = sdf.format(dt);
         pst2.setString(3, nombre);
        
         int rs = pst.executeUpdate();
-        int rs2 = pst2.executeUpdate();
-        if(rs == 1 && rs2 == 1){           
-        out.println("OK");
-        response.sendRedirect("poiLocal.jsp?user="+user); 
 
-        }        
-        else{
-            out.println("BAD");
-        response.sendRedirect("../../index.jsp");
+        if(rs == 1){           
+        pst2.executeUpdate();  %> 
+    <script>
+        var usuario = "<%= user%>"
+        var nombre = "<%= nombre%>"
+        if(window.confirm("El POI Local "+nombre+" se creó correctamente")){
+            window.location.replace("poiLocal.jsp?user="+usuario);            
         }
+    </script>
+        <%         
+        }        
+        else{            %>
+    <script>
+        var usuario = "<%= user%>"
+        if(window.confirm("El POI Local no se creó correctamente")){
+            window.location.replace("poiLocal.jsp?user="+usuario);            
+        }
+    </script>
+<% }}
        
-   }
-   catch(Exception e){       
+     catch(Exception e){       
        out.println("Something went wrong !! Please try again");   
          out.println("\n Message: " + e.getMessage());
   
